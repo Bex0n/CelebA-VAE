@@ -2,25 +2,27 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import pytorch_lightning as L
-from .types_ import Tensor
+from .types_ import List, Tensor
 
 from .decoder import Decoder
 from .encoder import Encoder
 
 
 class VanillaVAE(L.LightningModule):
-    def __init__(self, 
+    def __init__(self,
                  lr: int,
                  beta: int,
-                 encoder: Encoder, 
+                 encoder: Encoder,
                  decoder: Decoder):
         super().__init__()
         self.encoder = encoder
         self.decoder = decoder
         self.lr = lr
         self.beta = beta
+        self.save_hyperparameters()
 
-    def training_step(self, x: Tensor, batch_idx: int) -> int:
+    def training_step(self, data: List, batch_idx: int) -> int:
+        x, labels = data
         z_mean, z_log_var = self.encoder(x)
         z = self.sample_z(z_mean, z_log_var)
         reconstruction = self.decoder(z)
@@ -33,7 +35,7 @@ class VanillaVAE(L.LightningModule):
         return reconstruction_loss + kl_loss
 
     def sample_z(self, z_mean: Tensor, z_log_var: Tensor) -> Tensor:
-        eps = torch.normal(0, 1, size=z_mean.size())
+        eps = torch.randn_like(z_mean)
         return z_mean + torch.exp(0.5 * z_log_var) * eps
 
     def configure_optimizers(self):

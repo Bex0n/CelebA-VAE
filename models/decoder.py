@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from .types_ import List
+from .types_ import List, Tensor
 
 class Decoder(nn.Module):
     def __init__(self,
@@ -24,13 +24,13 @@ class Decoder(nn.Module):
         for i in range(len(hidden_dims) - 1):
             modules.append(
                 nn.Sequential(
-                    nn.ConvTranspose2d(hidden_dims[i],
-                                       hidden_dims[i + 1],
+                    nn.ConvTranspose2d(self.hidden_dims[i],
+                                       self.hidden_dims[i + 1],
                                        kernel_size=3,
                                        stride=2,
-                                       padding=1, 
+                                       padding=1,
                                        output_padding=1),
-                    nn.BatchNorm2d(hidden_dims[i + 1]),
+                    nn.BatchNorm2d(self.hidden_dims[i + 1]),
                     nn.ReLU()
                 )
             )
@@ -38,7 +38,7 @@ class Decoder(nn.Module):
         # Final layer
         modules.append(
             nn.Sequential(
-                nn.ConvTranspose2d(hidden_dims[-1],
+                nn.ConvTranspose2d(self.hidden_dims[-1],
                                    out_channels=3,
                                    kernel_size=3,
                                    stride=1,
@@ -48,7 +48,6 @@ class Decoder(nn.Module):
         )
 
         self.decoder = nn.Sequential(*modules)
-
 
     def forward(self, x: Tensor):
         x = self.decoder_input(x)
