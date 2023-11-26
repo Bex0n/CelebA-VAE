@@ -3,7 +3,7 @@ import models
 import yaml
 from dataset import VAEDataset
 from pytorch_lightning import Trainer
-from pytorch_lightning.loggers import TensorBoardLogger
+from pytorch_lightning.loggers import TensorBoardLogger, CSVLogger
 from pytorch_lightning.callbacks import LearningRateMonitor, ModelCheckpoint
 from torchinfo import summary
 
@@ -22,6 +22,7 @@ with open(args.filename, 'r') as file:
         print(e)
 
 tb_logger = TensorBoardLogger(save_dir='logs/', name='VanillaVAE')
+csv_logger = CSVLogger(save_dir='logs/', name='VanillaVAE')
 
 encoder = models.Encoder(in_channels=config['model_params']['in_channels'],
                          z_dim=config['model_params']['z_dim'])
@@ -44,7 +45,7 @@ data = VAEDataset(data_path=config['data_params']['data_path'],
 # data.prepare_data()
 data.setup()
 
-trainer = Trainer(logger=tb_logger,
+trainer = Trainer(logger=csv_logger,
                   accelerator=config['hardware_params']['accelerator'],
                   devices=config['hardware_params']['devices'],
                   max_epochs=config['training_params']['max_epochs'])

@@ -11,7 +11,7 @@ model_params:
 training_params:
   lr: 0.0001
   kl_weight: 0.0001
-  max_epochs: 1
+  max_epochs: 40
 
 hardware_params:
   accelerator: 'auto'
