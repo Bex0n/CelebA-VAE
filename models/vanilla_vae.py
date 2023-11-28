@@ -26,6 +26,12 @@ class VanillaVAE(L.LightningModule):
     def decode(self, x: Tensor) -> Tensor:
         return self.decoder(x)
 
+    def forward(self, x: Tensor) -> Tensor:
+        z_mean, z_log_var = self.encoder(x)
+        z = self.sample_z(z_mean, z_log_var)
+        reconstruction = self.decode(z)
+        return reconstruction
+
     def training_step(self, data: List, batch_idx: int) -> int:
         x, labels = data
         z_mean, z_log_var = self.encode(x)
@@ -38,8 +44,16 @@ class VanillaVAE(L.LightningModule):
                 dim=1
             ))
         loss = reconstruction_loss + kl_loss
-        self.log("Loss", loss, on_epoch=True, prog_bar=True, logger=True)
+        self.log_dict({'Loss': loss,
+                       'Reconstruction loss': reconstruction_loss,
+                       'KL loss': kl_loss},
+                      on_epoch=True,
+                      prog_bar=True,
+                      logger=True)
         return loss
+
+    def test_step(self, data: List):
+        pass
 
     def sample_z(self, z_mean: Tensor, z_log_var: Tensor) -> Tensor:
         eps = torch.randn_like(z_mean)

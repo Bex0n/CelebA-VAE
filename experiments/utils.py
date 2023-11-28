@@ -43,10 +43,10 @@ def display_img(images):
     num = images.size()[0]
     columns = 5
     rows = num // columns + 2
-    gs = gridspec.GridSpec(rows, columns, wspace=0.0, hspace=0.2)
+    gs = gridspec.GridSpec(rows, columns, wspace=0.0, hspace=0.1)
 
     for idx in range(num):
-        img = images[idx].permute(1, 2, 0)
+        img = images[idx].permute(1, 2, 0).to('cpu')
 
         ax = plt.subplot(gs[idx])
         ax.set_xticks([])

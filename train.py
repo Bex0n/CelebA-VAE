@@ -14,6 +14,11 @@ parser.add_argument('--config', '-c',
                     metavar='FILE',
                     help='path to the config file',
                     default='configs/vanilla_vae.yaml')
+parser.add_argument('--checkpoint', '-p',
+                    dest="checkpoint",
+                    metavar='FILE',
+                    help='path to model checkpoint',
+                    default=None)
 args = parser.parse_args()
 with open(args.filename, 'r') as file:
     try:
@@ -31,6 +36,13 @@ vanilla_vae = models.VanillaVAE(lr=config['training_params']['lr'],
                                 beta=config['training_params']['kl_weight'],
                                 encoder=encoder,
                                 decoder=decoder)
+if args.checkpoint:
+    print('Loading model from checkpoint.')
+    vanilla_vae = models.VanillaVAE.load_from_checkpoint(args.checkpoint,
+                                                         lr=config['training_params']['lr'],
+                                                         beta=config['training_params']['kl_weight'],
+                                                         encoder=encoder,
+                                                         decoder=decoder)()
 
 """
 A work-around to address issues with pytorch's celebA dataset class.
@@ -45,7 +57,7 @@ data = VAEDataset(data_path=config['data_params']['data_path'],
 # data.prepare_data()
 data.setup()
 
-trainer = Trainer(logger=csv_logger,
+trainer = Trainer(logger=tb_logger,
                   accelerator=config['hardware_params']['accelerator'],
                   devices=config['hardware_params']['devices'],
                   max_epochs=config['training_params']['max_epochs'])

@@ -22,7 +22,7 @@ class VAEDataset(L.LightningDataModule):
 
     def prepare_data(self) -> None:
         try:
-            CelebA(self.data_dir, download=True)
+            CelebA(self.data_dir, download=True, )
         except RuntimeError:
             print('\033[91m',
                   'Pytorch CelebA dataset download is blocked due to daily google drive download limit.\n'

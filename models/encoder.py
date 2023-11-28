@@ -35,7 +35,7 @@ class Encoder(nn.Module):
         self.fc_mean = nn.Linear(self.hidden_dims[-1] * 16, z_dim)
         self.fc_var = nn.Linear(self.hidden_dims[-1] * 16, z_dim)
 
-    def forward(self, x: List):
+    def forward(self, x: Tensor):
         x = self.encoder(x)
         x = torch.flatten(x, start_dim=1)
         z_mean = self.fc_mean(x)
