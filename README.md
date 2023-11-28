@@ -5,6 +5,14 @@ $ cd CelebA-VAE
 $ pip install -r requirements.txt
 ```
 
+### Usage
+```
+cd CelebA-VAE
+python train.py -c <path_to_config_file>
+```
+
+**Note:** model capabilities such as generating new celebrities or modifying features are available in the file experiments/vanilla_vae.py
+
 ### Citation
 ```
 @misc{Bex0n,
