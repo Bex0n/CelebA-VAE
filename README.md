@@ -1,3 +1,5 @@
+![][1]
+
 ### Installation
 ```
 $ git clone https://github.com/Bex0n/CelebA-VAE
@@ -24,3 +26,5 @@ python train.py -c <path_to_config_file>
   howpublished = {\url{https://github.com/Bex0n/CelebA-VAE}}
 }
 ```
+
+[1]: https://github.com/Bex0n/CelebA-VAE/tree/main/assets/feature_transformation.png
