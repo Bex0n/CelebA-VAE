@@ -27,4 +27,4 @@ python train.py -c <path_to_config_file>
 }
 ```
 
-[1]: https://github.com/Bex0n/CelebA-VAE/tree/main/assets/feature_transformation.png
+[1]: https://raw.githubusercontent.com/Bex0n/CelebA-VAE/main/assets/feature_transformation.png
