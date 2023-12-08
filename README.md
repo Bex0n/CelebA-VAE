@@ -1,8 +1,15 @@
-|Reconstruction | Samples |
-|---------------|---------|
-|    ![][2]     | ![][1]  |
+# CelebA-VAE
 
-### Sample Interpolation
+<table>
+  <tr>
+    <td style="width:50%">
+      <img src="https://raw.githubusercontent.com/Bex0n/CelebA-VAE/main/assets/vae_reconstruction.png" width="100%"/>
+    </td>
+    <td style="width:50%">
+      <img src="https://raw.githubusercontent.com/Bex0n/CelebA-VAE/main/assets/vae_training_data.png" width="100%"/>
+    </td>
+  </tr>
+</table>
 
 ![][3]
 
