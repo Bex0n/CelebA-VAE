@@ -1,4 +1,10 @@
-![][1]
+|Reconstruction | Samples |
+|---------------|---------|
+|    ![][2]     | ![][1]  |
+
+### Sample Interpolation
+
+![][3]
 
 ### Installation
 ```
@@ -27,4 +33,6 @@ python train.py -c <path_to_config_file>
 }
 ```
 
-[1]: https://raw.githubusercontent.com/Bex0n/CelebA-VAE/main/assets/feature_transformation.png
+[1]: https://raw.githubusercontent.com/Bex0n/CelebA-VAE/main/assets/vae_training_data.png
+[2]: https://raw.githubusercontent.com/Bex0n/CelebA-VAE/main/assets/vae_reconstruction.png
+[3]: https://raw.githubusercontent.com/Bex0n/CelebA-VAE/main/assets/vae_interpolation.png
