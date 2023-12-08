@@ -27,10 +27,11 @@ class VanillaVAE(L.LightningModule):
         return self.decoder(x)
 
     def forward(self, x: Tensor) -> Tensor:
-        z_mean, z_log_var = self.encoder(x)
-        z = self.sample_z(z_mean, z_log_var)
-        reconstruction = self.decode(z)
-        return reconstruction
+        with torch.no_grad():
+            z_mean, z_log_var = self.encoder(x)
+            z = self.sample_z(z_mean, z_log_var)
+            reconstruction = self.decode(z)
+            return reconstruction
 
     def training_step(self, data: List, batch_idx: int) -> int:
         x, labels = data

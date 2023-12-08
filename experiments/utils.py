@@ -1,8 +1,10 @@
 import matplotlib.gridspec as gridspec
 import matplotlib.pyplot as plt
+import numpy as np
 
 from torch.utils.data import Dataset
 from torchvision.datasets import ImageFolder
+import torchvision.utils as vutils
 
 class ImageFolderNoLabels(Dataset):
     def __init__(self, root, transform=None):
@@ -55,3 +57,15 @@ def display_img(images):
 
     plt.subplots_adjust(wspace=0.1, hspace=0.1)
     plt.show()
+
+    
+def display_grid(images, 
+                 nrow=8,
+                 figsize=(12,12)):
+    fig = plt.figure(figsize=figsize)
+    plt.imshow(
+        np.transpose(
+            vutils.make_grid(images, nrow=nrow, padding=2, normalize=True).cpu(),(1,2,0)
+        )
+    )
+    plt.axis('off')
