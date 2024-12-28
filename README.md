@@ -20,11 +20,20 @@ $ cd CelebA-VAE
 $ pip install -r requirements.txt
 ```
 
+Download the dataset [link](https://drive.google.com/file/d/1m8-EBPgi5MRubrm6iQjafK2QMHDBMSfJ/view?usp=sharing) and extract:
+
+```
+unzip celeba.zip
+cd celeba
+unzip img_align_celeba.zip
+cd ..
+```
+
 ### Usage
 ```
-cd CelebA-VAE
 python train.py -c <path_to_config_file>
 ```
+If you want to train the model with cpu only, change `accelerator: 'auto'` to `accelerator: 'cpu'` in the provided config file.
 
 **Note:** model capabilities such as generating new celebrities or modifying features are available in the file experiments/vanilla_vae.py
 
